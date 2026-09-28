@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.env
+client_secret*.json
+token*.json
+youtube_token*.json
+output/*
+!output/.gitkeep
