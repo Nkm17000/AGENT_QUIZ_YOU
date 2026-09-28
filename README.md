@@ -1,3 +1,18 @@
+
+## YouTube visual update
+
+The YouTube renderer now uses the same professional visual system as the updated
+quiz-video renderer:
+
+- Separate English, General Science, GK, Math, Reasoning, and All Subjects themes.
+- Clean gradient backgrounds with soft shapes only; no diagonal/cross lines or inner frame.
+- A/B/C/D markers have a fixed gap from the option text.
+- Four options are kept inside the 720x1280 canvas.
+- Answer slides reserve a dedicated high-contrast explanation panel below all four options.
+- Hindi and English explanation text use coordinated, high-contrast colors.
+- The final MP4 explicitly maps only video and audio streams and disables subtitle streams (`-sn`).
+- Subject is passed from `pipeline.py` through `video_service.py` into the renderer.
+
 # Smart Learning Lab — Quiz Video Generator
 
 Automated quiz-video generation and **YouTube channel upload** pipeline.

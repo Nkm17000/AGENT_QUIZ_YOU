@@ -75,7 +75,7 @@ def _ffprobe_duration(path: str) -> float:
     return max(0.01, int(hours) * 3600 + int(minutes) * 60 + float(seconds))
 
 
-def generate_images(quiz):
+def generate_images(quiz, subject="ALL SUBJECTS"):
     images = []
     # Defensive guard: one logical quiz question produces countdown, question,
     # and answer slides, but the number of logical questions must stay fixed.
@@ -88,15 +88,15 @@ def generate_images(quiz):
     for index, question in enumerate(quiz):
         for timer in (3, 2, 1):
             path = OUTPUT_DIR / f"slide_{index}_{timer}.jpg"
-            render_question(question, index, timer, path)
+            render_question(question, index, timer, path, subject=subject)
             images.append(str(path))
 
         question_path = OUTPUT_DIR / f"question_{index}.jpg"
-        render_question(question, index, None, question_path)
+        render_question(question, index, None, question_path, subject=subject)
         images.append(str(question_path))
 
         answer_path = OUTPUT_DIR / f"answer_{index}.jpg"
-        render_answer(question, index, answer_path)
+        render_answer(question, index, answer_path, subject=subject)
         images.append(str(answer_path))
     return images
 
@@ -236,7 +236,7 @@ def _make_audio(duration, narration_events, tick_events, correct_events):
     return audio_file
 
 
-def create_video(quiz, output_file):
+def create_video(quiz, output_file, subject="ALL SUBJECTS"):
     if not quiz:
         raise ValueError("quiz is empty")
 
@@ -254,7 +254,7 @@ def create_video(quiz, output_file):
         _run([
             "ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
             "-i", str(silent_video), "-i", str(audio_file),
-            "-map", "0:v:0", "-map", "1:a:0", "-c:v", "copy", "-c:a", "copy",
+            "-map", "0:v:0", "-map", "1:a:0", "-sn", "-c:v", "copy", "-c:a", "copy",
             "-shortest", str(output_file),
         ])
     else:

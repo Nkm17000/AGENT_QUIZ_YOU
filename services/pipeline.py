@@ -65,13 +65,13 @@ def _generate_one(item):
     print("=" * 80)
 
     print("🖼️ Rendering slides...")
-    images = generate_images(quiz)
+    images = generate_images(quiz, subject=item["subject"])
     output_video = _output_path(item)
     output_video.unlink(missing_ok=True)
 
     try:
         print("🎬 Creating video...")
-        create_video(quiz, output_video)
+        create_video(quiz, output_video, subject=item["subject"])
 
         if not output_video.is_file():
             raise RuntimeError(f"Video file was not created: {output_video}")
