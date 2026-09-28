@@ -13,7 +13,10 @@ from pathlib import Path
 
 from google_auth_oauthlib.flow import InstalledAppFlow
 
-SCOPES = ["https://www.googleapis.com/auth/youtube.upload"]
+SCOPES = [
+    "https://www.googleapis.com/auth/youtube.upload",
+    "https://www.googleapis.com/auth/youtube.force-ssl",
+]
 
 
 def main():
@@ -31,13 +34,12 @@ def main():
         SCOPES,
     )
     credentials = flow.run_local_server(
-    host="127.0.0.1",
-    port=8086,
-    authorization_prompt_message="Please visit this URL: {url}",
-    success_message="Authorization complete. You may close this window.",
-    open_browser=True,
-    include_granted_scopes="true",
-)
+        host="127.0.0.1",
+        port=8086,
+        access_type="offline",
+        prompt="consent",
+        include_granted_scopes="true",
+    )
 
     print("\nAuthorization completed.")
     print("YOUTUBE_CLIENT_ID=" + credentials.client_id)

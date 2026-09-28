@@ -39,6 +39,7 @@ PAGE_URL = os.getenv("PAGE_URL", "https://smartlearninglab-react.pages.dev").str
 YOUTUBE_CLIENT_ID = (os.getenv("YOUTUBE_CLIENT_ID") or "").strip()
 YOUTUBE_CLIENT_SECRET = (os.getenv("YOUTUBE_CLIENT_SECRET") or "").strip()
 YOUTUBE_REFRESH_TOKEN = (os.getenv("YOUTUBE_REFRESH_TOKEN") or "").strip()
+YOUTUBE_PLAYLIST_TITLE = (os.getenv("YOUTUBE_PLAYLIST_TITLE", "SMART LEARNING LAB") or "SMART LEARNING LAB").strip()
 YOUTUBE_PRIVACY_STATUS = (os.getenv("YOUTUBE_PRIVACY_STATUS", "public") or "public").strip().lower()
 YOUTUBE_CATEGORY_ID = (os.getenv("YOUTUBE_CATEGORY_ID", "27") or "27").strip()
 YOUTUBE_MADE_FOR_KIDS = (os.getenv("YOUTUBE_MADE_FOR_KIDS", "false") or "false").strip().lower() == "true"

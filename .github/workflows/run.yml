@@ -7,7 +7,7 @@ on:
       - data/history/history.json
   workflow_dispatch:
   schedule:
-    # 02:00, 08:00, 14:00 and 20:00 UTC every day.
+    # Run every hour, every day (GitHub Actions uses UTC).
     - cron: "0 * * * *"
 
 permissions:
@@ -60,6 +60,7 @@ jobs:
           YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
           YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
           YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          YOUTUBE_PLAYLIST_TITLE: SMART LEARNING LAB
           YOUTUBE_PRIVACY_STATUS: public
           YOUTUBE_CATEGORY_ID: 27
           YOUTUBE_MADE_FOR_KIDS: false

@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from config import OUTPUT_DIR, PAGE_URL
-from services.youtube_service import upload_video_to_youtube
+from services.youtube_service import prepare_youtube_destination, upload_video_to_youtube
 from services.quiz_service import QUIZ_SIZE, commit_quiz_counter, fetch_quizzes
 from services.video_service import create_video, generate_images
 from utils.file_utils import cleanup
@@ -109,6 +109,8 @@ def _generate_one(item):
 def run_pipeline():
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
+    print("🔐 Validating YouTube OAuth and playlist access...")
+    prepare_youtube_destination()
     print("📥 Preparing all quizzes...")
     quiz_jobs = fetch_quizzes()
     if not quiz_jobs:
