@@ -7,8 +7,9 @@ on:
       - data/history/history.json
   workflow_dispatch:
   schedule:
-    # Run every hour, every day (GitHub Actions uses UTC).
-    - cron: "0 * * * *"
+    # Run 4 times per day (GitHub Actions uses UTC).
+    # IST: 07:30, 13:30, 19:30, 01:30 next day.
+    - cron: "0 2,8,14,20 * * *"
 
 permissions:
   contents: write
@@ -54,7 +55,7 @@ jobs:
             echo '{"version": 2, "counters": {}, "last_run": {}}' > data/history/history.json
           fi
 
-      - name: Generate and publish all quiz videos
+      - name: Generate and publish quiz videos
         run: python app.py
         env:
           YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
@@ -65,6 +66,7 @@ jobs:
           YOUTUBE_CATEGORY_ID: 27
           YOUTUBE_MADE_FOR_KIDS: false
           YOUTUBE_LANGUAGE: en
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
           YOUTUBE_DEFAULT_TAGS: smart learning lab,quiz,competitive exams,ssc,upsc,banking,railway,ras,ias,gk,mock test
           TTS_VOICE: en-IN-NeerjaNeural
           TTS_RATE: +0%
@@ -77,6 +79,7 @@ jobs:
           TTS_CONCURRENCY: 6
 
       - name: Commit quiz counters
+        if: always()
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"

@@ -6,7 +6,7 @@ from config import QUIZ_DIR
 from utils.memory import load_memory, save_memory
 
 QUIZ_SIZE = 20
-MIX_QUIZ_COUNT = 2
+MIX_QUIZ_COUNT = 1
 
 
 def _load_json(path: Path):
@@ -69,7 +69,7 @@ def fetch_quizzes():
 
     Rules:
       * Every normal JSON file produces exactly one 20-question quiz.
-      * The mixed JSON file produces exactly two 20-question quizzes.
+      * The mixed JSON file produces exactly one 20-question quiz.
       * Each source has its own persistent counter.
       * Questions are shuffled only inside each completed quiz.
     """
@@ -105,7 +105,7 @@ def fetch_quizzes():
         quiz_count = MIX_QUIZ_COUNT if _is_mix_file(path) else 1
         required = QUIZ_SIZE * quiz_count
 
-        # A mixed file must provide two complete 20-question batches for every
+        # A mixed file must provide one complete 20-question batch for every
         # run. If the second batch would cross the end, restart its cycle.
         if len(data) < required:
             raise ValueError(

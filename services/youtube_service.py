@@ -31,6 +31,14 @@ MAX_TITLE_LENGTH = 100
 MAX_DESCRIPTION_LENGTH = 5000
 
 
+class YouTubeUploadLimitError(RuntimeError):
+    """Raised when YouTube blocks uploads because the channel upload limit was reached."""
+
+    def __init__(self, message: str, retry_after_hours: int = 24):
+        super().__init__(message)
+        self.retry_after_hours = retry_after_hours
+
+
 def _require_config() -> None:
     missing = []
     if not YOUTUBE_CLIENT_ID:
@@ -237,8 +245,13 @@ def upload_video_to_youtube(
             if status:
                 print(f"   YouTube upload progress: {status.progress() * 100:.1f}%")
         except HttpError as exc:
-            # Let the pipeline fail cleanly. The source counter is committed
-            # only after this function returns successfully.
+            details = str(exc)
+            if "uploadLimitExceeded" in details or "exceeded the number of videos" in details:
+                raise YouTubeUploadLimitError(
+                    "YouTube upload limit reached. YouTube requires waiting before "
+                    "additional uploads can be accepted; no source counter was advanced."
+                ) from exc
+
             raise RuntimeError(
                 f"YouTube upload failed with HTTP {exc.resp.status}: {exc}"
             ) from exc

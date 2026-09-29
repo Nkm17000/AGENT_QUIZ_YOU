@@ -1,11 +1,61 @@
 from pathlib import Path
+from datetime import datetime, timezone, timedelta
+import os
 
 from config import OUTPUT_DIR, PAGE_URL
-from services.youtube_service import prepare_youtube_destination, upload_video_to_youtube
+from services.youtube_service import (
+    prepare_youtube_destination,
+    upload_video_to_youtube,
+    YouTubeUploadLimitError,
+)
 from services.quiz_service import QUIZ_SIZE, commit_quiz_counter, fetch_quizzes
 from services.video_service import create_video, generate_images
 from utils.file_utils import cleanup
 from utils.memory import load_memory, save_memory
+
+
+YOUTUBE_COOLDOWN_KEY = "youtube_upload_blocked_until"
+YOUTUBE_COOLDOWN_HOURS = 24
+
+
+def _load_youtube_cooldown():
+    memory = load_memory()
+    raw = memory.get(YOUTUBE_COOLDOWN_KEY)
+    if not raw:
+        return None
+    try:
+        return datetime.fromisoformat(raw.replace("Z", "+00:00"))
+    except (TypeError, ValueError):
+        return None
+
+
+def _youtube_upload_blocked() -> bool:
+    blocked_until = _load_youtube_cooldown()
+    if not blocked_until:
+        return False
+    now = datetime.now(timezone.utc)
+    if blocked_until <= now:
+        memory = load_memory()
+        memory.pop(YOUTUBE_COOLDOWN_KEY, None)
+        save_memory(memory)
+        return False
+    print(
+        "⏸️ YouTube upload cooldown active until "
+        f"{blocked_until.strftime('%Y-%m-%d %H:%M:%S UTC')}. "
+        "Skipping video generation."
+    )
+    return True
+
+
+def _set_youtube_cooldown() -> None:
+    blocked_until = datetime.now(timezone.utc) + timedelta(hours=YOUTUBE_COOLDOWN_HOURS)
+    memory = load_memory()
+    memory[YOUTUBE_COOLDOWN_KEY] = blocked_until.isoformat()
+    save_memory(memory)
+    print(
+        "⏸️ YouTube upload limit reached. Cooldown saved until "
+        f"{blocked_until.strftime('%Y-%m-%d %H:%M:%S UTC')}."
+    )
 
 
 def _caption(subject: str) -> str:
@@ -109,47 +159,44 @@ def _generate_one(item):
 def run_pipeline():
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
+    if _youtube_upload_blocked():
+        return
+
     print("🔐 Validating YouTube OAuth and playlist access...")
     prepare_youtube_destination()
-    print("📥 Preparing all quizzes...")
+    print("📥 Preparing quizzes for YouTube...")
     quiz_jobs = fetch_quizzes()
     if not quiz_jobs:
         print("🚫 No quizzes available")
         return
 
-    print(f"🚀 This run will generate {len(quiz_jobs)} videos")
+    event = os.getenv("GITHUB_EVENT_NAME", "").strip().lower()
+    is_manual_run = event in {"workflow_dispatch", "push", ""}
+    jobs_to_process = quiz_jobs[:1] if is_manual_run else quiz_jobs
+
+    if is_manual_run:
+        print("🖐️ Manual/push run: exactly 1 YouTube video will be generated.")
+    else:
+        print(f"🗓️ Scheduled run: generating {len(jobs_to_process)} YouTube videos (one per subject/source).")
+
     completed = 0
     failed = 0
-    failed_sources = set()
-
-    for item in quiz_jobs:
-        # For the mixed source, quiz 2 depends on quiz 1 being successfully
-        # completed. If quiz 1 fails, do not consume/skip the next 20 questions.
-        if item["source_file"] in failed_sources:
-            print(
-                f"⏭️ Skipping {item['subject']} quiz {item['quiz_number']} "
-                f"because an earlier quiz from the same source failed."
-            )
-            failed += 1
-            continue
-
+    for item in jobs_to_process:
         try:
             _generate_one(item)
             completed += 1
+        except YouTubeUploadLimitError as exc:
+            failed += 1
+            _set_youtube_cooldown()
+            print(f"⏸️ Stopping run after YouTube upload-limit error: {exc}")
+            break
         except Exception as exc:
             failed += 1
-            failed_sources.add(item["source_file"])
-            # Continue to the next source so one failed source does not prevent
-            # unrelated subject videos from being generated and uploaded.
-            print(
-                f"❌ Failed {item['subject']} quiz {item['quiz_number']} "
-                f"from {item['source_file']}: {exc}"
-            )
+            print(f"❌ Failed {item['subject']} quiz {item['quiz_number']} from {item['source_file']}: {exc}")
+            # Continue with the remaining subjects. A failure in one source
+            # must not prevent the other scheduled subjects from publishing.
 
     print("\n" + "=" * 80)
-    print(f"✅ Completed videos: {completed}/{len(quiz_jobs)}")
-    print(f"❌ Failed videos: {failed}/{len(quiz_jobs)}")
+    print(f"✅ Completed videos: {completed}/{len(jobs_to_process)}")
+    print(f"❌ Failed videos: {failed}/{len(jobs_to_process)}")
     print("=" * 80)
-
-    if failed:
-        raise RuntimeError(f"{failed} quiz video job(s) failed")
