@@ -1,43 +1,43 @@
 {
   "version": 2,
   "counters": {
-    "smart_learning_lab_50000_mixed_questions.json": 280,
-    "smart_learning_lab_english_grammar_10000_questions_reshuffled.json": 180,
-    "smart_learning_lab_general_science_10000_questions_reshuffled.json": 180,
-    "smart_learning_lab_gk_10000_questions_reshuffled.json": 180,
-    "smart_learning_lab_math_10000_questions_reshuffled.json": 140,
-    "smart_learning_lab_reasoning_10000_questions_reshuffled.json": 140
+    "smart_learning_lab_50000_mixed_questions.json": 300,
+    "smart_learning_lab_english_grammar_10000_questions_reshuffled.json": 200,
+    "smart_learning_lab_general_science_10000_questions_reshuffled.json": 200,
+    "smart_learning_lab_gk_10000_questions_reshuffled.json": 200,
+    "smart_learning_lab_math_10000_questions_reshuffled.json": 160,
+    "smart_learning_lab_reasoning_10000_questions_reshuffled.json": 160
   },
   "last_run": {
     "smart_learning_lab_50000_mixed_questions.json": {
       "subject": "ALL SUBJECTS",
       "quiz_number": 1,
-      "source_counter_after": 280
+      "source_counter_after": 300
     },
     "smart_learning_lab_english_grammar_10000_questions_reshuffled.json": {
       "subject": "ENGLISH",
       "quiz_number": 1,
-      "source_counter_after": 180
+      "source_counter_after": 200
     },
     "smart_learning_lab_general_science_10000_questions_reshuffled.json": {
       "subject": "GENERAL SCIENCE",
       "quiz_number": 1,
-      "source_counter_after": 180
+      "source_counter_after": 200
     },
     "smart_learning_lab_gk_10000_questions_reshuffled.json": {
       "subject": "GK",
       "quiz_number": 1,
-      "source_counter_after": 180
+      "source_counter_after": 200
     },
     "smart_learning_lab_math_10000_questions_reshuffled.json": {
       "subject": "MATH",
       "quiz_number": 1,
-      "source_counter_after": 140
+      "source_counter_after": 160
     },
     "smart_learning_lab_reasoning_10000_questions_reshuffled.json": {
       "subject": "REASONING",
       "quiz_number": 1,
-      "source_counter_after": 140
+      "source_counter_after": 160
     }
   }
 }
