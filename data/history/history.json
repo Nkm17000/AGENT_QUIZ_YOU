@@ -1,10 +1,10 @@
 {
   "version": 2,
   "counters": {
-    "smart_learning_lab_50000_mixed_questions.json": 380,
-    "smart_learning_lab_english_grammar_10000_questions_reshuffled.json": 280,
-    "smart_learning_lab_general_science_10000_questions_reshuffled.json": 280,
-    "smart_learning_lab_gk_10000_questions_reshuffled.json": 280,
+    "smart_learning_lab_50000_mixed_questions.json": 400,
+    "smart_learning_lab_english_grammar_10000_questions_reshuffled.json": 300,
+    "smart_learning_lab_general_science_10000_questions_reshuffled.json": 300,
+    "smart_learning_lab_gk_10000_questions_reshuffled.json": 300,
     "smart_learning_lab_math_10000_questions_reshuffled.json": 200,
     "smart_learning_lab_reasoning_10000_questions_reshuffled.json": 200
   },
@@ -12,22 +12,22 @@
     "smart_learning_lab_50000_mixed_questions.json": {
       "subject": "ALL SUBJECTS",
       "quiz_number": 1,
-      "source_counter_after": 380
+      "source_counter_after": 400
     },
     "smart_learning_lab_english_grammar_10000_questions_reshuffled.json": {
       "subject": "ENGLISH",
       "quiz_number": 1,
-      "source_counter_after": 280
+      "source_counter_after": 300
     },
     "smart_learning_lab_general_science_10000_questions_reshuffled.json": {
       "subject": "GENERAL SCIENCE",
       "quiz_number": 1,
-      "source_counter_after": 280
+      "source_counter_after": 300
     },
     "smart_learning_lab_gk_10000_questions_reshuffled.json": {
       "subject": "GK",
       "quiz_number": 1,
-      "source_counter_after": 280
+      "source_counter_after": 300
     },
     "smart_learning_lab_math_10000_questions_reshuffled.json": {
       "subject": "MATH",
