@@ -9,6 +9,10 @@ from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaFileUpload
 
 from config import (
+    APP_NAME,
+    EDUAPPNAME,
+    FACEBOOK_PAGE_URL,
+    INSTAGRAM_PAGES,
     YOUTUBE_CATEGORY_ID,
     YOUTUBE_CLIENT_ID,
     YOUTUBE_CLIENT_SECRET,
@@ -149,7 +153,7 @@ def _find_or_create_playlist(youtube) -> str:
         body={
             "snippet": {
                 "title": YOUTUBE_PLAYLIST_TITLE,
-            "description": f"{APP_NAME} daily quiz videos. Follow: {", ".join(INSTAGRAM_PAGES)}. Facebook: {FACEBOOK_PAGE_URL}. Learn more: {EDUAPPNAME}",
+            "description": f"{APP_NAME} daily quiz videos. Follow: {', '.join(INSTAGRAM_PAGES)}. Facebook: {FACEBOOK_PAGE_URL}. Learn more: {EDUAPPNAME}",
             },
             "status": {"privacyStatus": "public"},
         },
