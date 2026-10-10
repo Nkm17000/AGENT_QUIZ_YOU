@@ -3,7 +3,7 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
-from config import ASSETS_DIR, VIDEO_HEIGHT, VIDEO_WIDTH
+from config import APP_NAME, ASSETS_DIR, LOGO_FILE, VIDEO_HEIGHT, VIDEO_WIDTH
 
 DEVANAGARI_RE = re.compile(r"[\u0900-\u097F\u1CD0-\u1CFF\uA8E0-\uA8FF]")
 FONT_EN = ASSETS_DIR / "fonts" / "DejaVuSans.ttf"
@@ -156,8 +156,7 @@ def _logo():
     if _LOGO is not None:
         return _LOGO
 
-    source = Image.open(ASSETS_DIR / "logo.png").convert("RGBA")
-    source = source.crop((90, 25, 380, 315))
+    source = Image.open(LOGO_FILE).convert("RGBA")
     source.thumbnail((180, 180), Image.Resampling.LANCZOS)
 
     size = 205
@@ -607,7 +606,7 @@ def render_question(q, index, timer, output, subject="ALL SUBJECTS"):
 
     draw.text(
         (VIDEO_WIDTH // 2, 1080),
-        "Smart Learning Lab",
+        APP_NAME,
         font=_font(20, bold=True),
         fill=theme["text"],
         anchor="mm",
@@ -681,7 +680,7 @@ def render_answer(q, index, output, subject="ALL SUBJECTS"):
 
     draw.text(
         (VIDEO_WIDTH // 2, 1170),
-        "Smart Learning Lab",
+        APP_NAME,
         font=_font(21, bold=True),
         fill=theme["text"],
         anchor="mm",

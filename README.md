@@ -13,7 +13,7 @@ quiz-video renderer:
 - The final MP4 explicitly maps only video and audio streams and disables subtitle streams (`-sn`).
 - Subject is passed from `pipeline.py` through `video_service.py` into the renderer.
 
-# Smart Learning Lab — Quiz Video Generator
+# Smart Learning Lab 247 — Quiz Video Generator
 
 Automated quiz-video generation and **YouTube channel upload** pipeline.
 
@@ -185,3 +185,11 @@ Never commit:
 - GitHub Actions secrets
 
 The project `.gitignore` already excludes these credential files.
+
+
+## Branding configuration
+
+Set `APP_NAME` once to change the brand name used in generated slides and descriptions.
+`INSTAGRAM_PAGES` accepts comma-separated Instagram profile URLs. The default includes
+`@smartlearninglab247` and `@cgl_ssc_railway_rpsc_bank`. `FACEBOOK_PAGE_URL` and
+`EDUAPPNAME` configure the Facebook page and education app links.

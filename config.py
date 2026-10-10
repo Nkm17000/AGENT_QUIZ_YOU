@@ -6,6 +6,21 @@ from dotenv import load_dotenv
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent
+
+# Central branding and public links. Change APP_NAME here to update branding.
+APP_NAME = (os.getenv("APP_NAME", "Smart Learning Lab 247") or "Smart Learning Lab 247").strip()
+INSTAGRAM_PAGES = [
+    item.strip() for item in os.getenv(
+        "INSTAGRAM_PAGES",
+        "https://www.instagram.com/smartlearninglab247,https://www.instagram.com/cgl_ssc_railway_rpsc_bank",
+    ).split(",") if item.strip()
+]
+FACEBOOK_PAGE_URL = (os.getenv(
+    "FACEBOOK_PAGE_URL", "https://www.facebook.com/smartlearninglab247"
+) or "https://www.facebook.com/smartlearninglab247").strip()
+EDUAPPNAME = (os.getenv(
+    "EDUAPPNAME", "https://smartlearninglab-react.pages.dev/"
+) or "https://smartlearninglab-react.pages.dev/").strip()
 ASSETS_DIR = BASE_DIR / "assets"
 QUIZ_DIR = Path(os.getenv("QUIZ_DIR", ASSETS_DIR / "quiz_data")).expanduser()
 OUTPUT_DIR = Path(os.getenv("OUTPUT_DIR", BASE_DIR / "output")).expanduser()
@@ -35,11 +50,11 @@ TICK_AUDIO = ASSETS_DIR / "tick.mp3"
 CORRECT_AUDIO = ASSETS_DIR / "correct.mp3"
 LOGO_FILE = ASSETS_DIR / "logo.png"
 
-PAGE_URL = os.getenv("PAGE_URL", "https://smartlearninglab-react.pages.dev").strip()
+PAGE_URL = (os.getenv("PAGE_URL") or EDUAPPNAME).strip()
 YOUTUBE_CLIENT_ID = (os.getenv("YOUTUBE_CLIENT_ID") or "").strip()
 YOUTUBE_CLIENT_SECRET = (os.getenv("YOUTUBE_CLIENT_SECRET") or "").strip()
 YOUTUBE_REFRESH_TOKEN = (os.getenv("YOUTUBE_REFRESH_TOKEN") or "").strip()
-YOUTUBE_PLAYLIST_TITLE = (os.getenv("YOUTUBE_PLAYLIST_TITLE", "SMART LEARNING LAB") or "SMART LEARNING LAB").strip()
+YOUTUBE_PLAYLIST_TITLE = (os.getenv("YOUTUBE_PLAYLIST_TITLE", APP_NAME) or APP_NAME).strip()
 YOUTUBE_PRIVACY_STATUS = (os.getenv("YOUTUBE_PRIVACY_STATUS", "public") or "public").strip().lower()
 YOUTUBE_CATEGORY_ID = (os.getenv("YOUTUBE_CATEGORY_ID", "27") or "27").strip()
 YOUTUBE_MADE_FOR_KIDS = (os.getenv("YOUTUBE_MADE_FOR_KIDS", "false") or "false").strip().lower() == "true"
@@ -47,7 +62,7 @@ YOUTUBE_LANGUAGE = (os.getenv("YOUTUBE_LANGUAGE", "en") or "en").strip()
 YOUTUBE_DEFAULT_TAGS = [
     tag.strip() for tag in
     (os.getenv("YOUTUBE_DEFAULT_TAGS",
-     "smart learning lab,quiz,competitive exams,ssc,upsc,banking,railway,ras,ias,gk,mock test").split(","))
+     "smart learning lab 247,quiz,competitive exams,ssc,upsc,banking,railway,ras,ias,gk,mock test").split(","))
     if tag.strip()
 ]
 

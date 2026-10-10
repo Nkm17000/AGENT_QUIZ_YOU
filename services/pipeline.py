@@ -2,7 +2,7 @@ from pathlib import Path
 from datetime import datetime, timezone, timedelta
 import os
 
-from config import OUTPUT_DIR, PAGE_URL
+from config import APP_NAME, EDUAPPNAME, FACEBOOK_PAGE_URL, INSTAGRAM_PAGES, OUTPUT_DIR, PAGE_URL
 from services.youtube_service import (
     prepare_youtube_destination,
     upload_video_to_youtube,
@@ -75,11 +75,14 @@ def _caption(subject: str) -> str:
 
     return f"""{heading}
 
-📚 Daily practice for serious aspirants
+📚 {APP_NAME} | Daily practice for serious aspirants
 
 🎯 SSC | UPSC | Banking | Railway | RAS | IAS
 
-For more quizzes, visit: {PAGE_URL}
+For more quizzes, visit: {EDUAPPNAME or PAGE_URL}
+
+Follow us on Instagram: {" | ".join(INSTAGRAM_PAGES)}
+Facebook: {FACEBOOK_PAGE_URL}
 
 💬 Drop your answer below
 

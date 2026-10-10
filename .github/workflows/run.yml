@@ -61,13 +61,17 @@ jobs:
           YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
           YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
           YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
-          YOUTUBE_PLAYLIST_TITLE: SMART LEARNING LAB
+          APP_NAME: Smart Learning Lab 247
+          INSTAGRAM_PAGES: https://www.instagram.com/smartlearninglab247,https://www.instagram.com/cgl_ssc_railway_rpsc_bank
+          FACEBOOK_PAGE_URL: https://www.facebook.com/smartlearninglab247
+          EDUAPPNAME: https://smartlearninglab-react.pages.dev/
+          YOUTUBE_PLAYLIST_TITLE: Smart Learning Lab 247
           YOUTUBE_PRIVACY_STATUS: public
           YOUTUBE_CATEGORY_ID: 27
           YOUTUBE_MADE_FOR_KIDS: false
           YOUTUBE_LANGUAGE: en
           GITHUB_EVENT_NAME: ${{ github.event_name }}
-          YOUTUBE_DEFAULT_TAGS: smart learning lab,quiz,competitive exams,ssc,upsc,banking,railway,ras,ias,gk,mock test
+          YOUTUBE_DEFAULT_TAGS: smart learning lab 247,quiz,competitive exams,ssc,upsc,banking,railway,ras,ias,gk,mock test
           TTS_VOICE: en-IN-NeerjaNeural
           TTS_RATE: +0%
           TTS_VOLUME: +0%

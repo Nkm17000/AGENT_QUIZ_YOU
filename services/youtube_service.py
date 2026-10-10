@@ -120,7 +120,7 @@ def _description(
         f"Quiz: {quiz_number}\n"
         "\nUse the Video ID above when referring to this quiz.\n"
         "Subscribe for daily practice quizzes.\n"
-        "Smart Learning Lab — Learn • Practice • Grow"
+        f"{APP_NAME} — Learn • Practice • Grow"
     )
     return (description + extra)[:MAX_DESCRIPTION_LENGTH]
 
@@ -149,7 +149,7 @@ def _find_or_create_playlist(youtube) -> str:
         body={
             "snippet": {
                 "title": YOUTUBE_PLAYLIST_TITLE,
-                "description": "Smart Learning Lab daily quiz videos.",
+            "description": f"{APP_NAME} daily quiz videos. Follow: {", ".join(INSTAGRAM_PAGES)}. Facebook: {FACEBOOK_PAGE_URL}. Learn more: {EDUAPPNAME}",
             },
             "status": {"privacyStatus": "public"},
         },
